@@ -5,9 +5,12 @@ import { Background } from './Background.js';
 import { ScoreDisplay } from './ScoreDisplay.js'
 import { Character } from './Character';
 import { ButtonDisplay } from './Button';
+import { Stairs } from './Stairs';
+
+import { STEP_NUM } from './Constants';
 
 let WIDTH, HEIGHT;
-let bg, score, player, buttons;
+let bg, score, player, buttons, stairs;
 
 sketch.setup = function(){
   HEIGHT = windowHeight;
@@ -18,13 +21,16 @@ sketch.setup = function(){
   score = new ScoreDisplay();
   player = new Character(WIDTH/2, HEIGHT*0.8, 100);
   buttons = new ButtonDisplay(WIDTH, HEIGHT*0.9, 120);
+  stairs = new Stairs();
+  stairs.getStairs(STEP_NUM);
 }
 
 sketch.draw= function(){
   bg.draw();
+  stairs.draw();
+  buttons.draw();
   score.draw();
   player.draw();
-  buttons.draw();
 }
 
 sketch.mousePressed = function(){
@@ -33,12 +39,12 @@ sketch.mousePressed = function(){
 
 sketch.keyPressed = function() {
   switch (key) {
-    // case 'ArrowUp':
-    //   bg.setPosition(bg.x, bg.y+10);
-    //   break;
-    // case 'ArrowDown':
-    //   bg.setPosition(bg.x, bg.y-10);
-    //   break;
+    case 'ArrowUp':
+      stairs.moveStairs('left');
+      break;
+    case 'ArrowDown':
+      stairs.moveStairs('right');
+      break;
     case 'ArrowLeft':
       // character change direction
       player.changeDirection();
