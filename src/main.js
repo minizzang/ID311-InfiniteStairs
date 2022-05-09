@@ -3,19 +3,25 @@ import {sketch} from 'p5js-wrapper';
 
 import { Background } from './Background.js';
 import { ScoreDisplay } from './ScoreDisplay.js'
+import { Character } from './Character';
 
-let bg, score;
+let WIDTH, HEIGHT;
+let bg, score, player;
 
 sketch.setup = function(){
-  createCanvas (windowHeight*0.7, windowHeight);
+  HEIGHT = windowHeight;
+  WIDTH = HEIGHT*0.7;
+  createCanvas (WIDTH, HEIGHT);
 
   bg = new Background(400, 300, 1200);
   score = new ScoreDisplay();
+  player = new Character(WIDTH/2, HEIGHT*0.8, 100);
 }
 
 sketch.draw= function(){
   bg.draw();
   score.draw();
+  player.draw();
 }
 
 sketch.mousePressed = function(){
@@ -24,17 +30,17 @@ sketch.mousePressed = function(){
 
 sketch.keyPressed = function() {
   switch (key) {
-    case 'ArrowUp':
-      bg.setPosition(bg.x, bg.y+10);
-      break;
-    case 'ArrowDown':
-      bg.setPosition(bg.x, bg.y-10);
-      break;
+    // case 'ArrowUp':
+    //   bg.setPosition(bg.x, bg.y+10);
+    //   break;
+    // case 'ArrowDown':
+    //   bg.setPosition(bg.x, bg.y-10);
+    //   break;
     case 'ArrowLeft':
-      bg.setPosition(bg.x+10, bg.y);
+      player.changeDirection();
       break;
     case 'ArrowRight':
-      bg.setPosition(bg.x-10, bg.y);
+      // character go upstair
       break;
     case ' ':
       score.setIsPlaying(true);
