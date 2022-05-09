@@ -1,1 +1,1 @@
-export const SIZE = 20;
+export const SCORE_FONT_SIZE = 80;

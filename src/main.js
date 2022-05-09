@@ -2,34 +2,47 @@ import '../css/style.css';
 import {sketch} from 'p5js-wrapper';
 
 import { Background } from './Background.js';
+import { ScoreDisplay } from './ScoreDisplay.js'
 
-let bg;
+let bg, score;
 
 sketch.setup = function(){
-  createCanvas (800, 600);
+  createCanvas (windowHeight*0.7, windowHeight);
 
   bg = new Background(400, 300, 1200);
+  score = new ScoreDisplay();
 }
 
 sketch.draw= function(){
-  background(100);
-  fill(255, 0, 0);
-  noStroke();
-  rectMode(CENTER);
-  rect(mouseX, mouseY, 50, 50);
-
   bg.draw();
+  score.draw();
 }
 
 sketch.mousePressed = function(){
   console.log('here');
 }
 
-sketch.keyPressed = function() {  // 나중에 switch 문으로 변경
-  if (key === 'ArrowUp') bg.setPosition(bg.x, bg.y+10);
-  else if (key === 'ArrowDown') bg.setPosition(bg.x, bg.y-10);
-  else if (key === 'ArrowLeft') bg.setPosition(bg.x+10, bg.y);
-  else if (key === 'ArrowRight') bg.setPosition(bg.x-10, bg.y);
-
+sketch.keyPressed = function() {
+  switch (key) {
+    case 'ArrowUp':
+      bg.setPosition(bg.x, bg.y+10);
+      break;
+    case 'ArrowDown':
+      bg.setPosition(bg.x, bg.y-10);
+      break;
+    case 'ArrowLeft':
+      bg.setPosition(bg.x+10, bg.y);
+      break;
+    case 'ArrowRight':
+      bg.setPosition(bg.x-10, bg.y);
+      break;
+    case ' ':
+      score.setIsPlaying(true);
+      score.setLifeGauge(-1);
+      break;
+    case '+':
+      score.addScore(1);
+      break;
+  }
   console.log(key);
 }
