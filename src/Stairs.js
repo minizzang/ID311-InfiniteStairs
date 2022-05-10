@@ -98,13 +98,11 @@ class Stairs {
     for (let i=0; i<this.stairArray.length; i++) {
       stepObj = this.stairArray[i];
       stepObj.moveXY(amountX, amountY);
-
-      if (stepObj.getXY().y > height) {
-        this.stairArray.splice(i, 1);
-        this.getStairs(1);
-        stepObj = this.stairArray[this.stairArray.length-1];
-      }
-      this.lastPosition = stepObj.getXY();
+    }
+    if (this.stairArray[0].getXY().y > height) {
+      this.stairArray.splice(0, 1);
+      this.lastPosition = this.stairArray.at(-1).getXY();
+      this.getStairs(1);
     }
   }
 
