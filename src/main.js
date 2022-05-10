@@ -3,7 +3,7 @@ import {sketch} from 'p5js-wrapper';
 
 import { Background } from './Background.js';
 import { ScoreDisplay } from './ScoreDisplay.js'
-import { Character } from './Character';
+import { Player } from './Player';
 import { ButtonDisplay } from './Button';
 import { Stairs } from './Stairs';
 
@@ -19,10 +19,12 @@ sketch.setup = function(){
 
   bg = new Background(400, 300, 1200);
   score = new ScoreDisplay();
-  player = new Character(WIDTH/2, HEIGHT*0.8, 100);
-  buttons = new ButtonDisplay(WIDTH, HEIGHT*0.9, 120);
-  stairs = new Stairs();
+  player = new Player(WIDTH/2, HEIGHT*0.65, 90);
+  buttons = new ButtonDisplay(WIDTH, HEIGHT*0.9, 110);
+  stairs = new Stairs(HEIGHT*0.65);
   stairs.getStairs(STEP_NUM);
+
+  subscribeSubjects();
 }
 
 sketch.draw= function(){
@@ -34,24 +36,18 @@ sketch.draw= function(){
 }
 
 sketch.mousePressed = function(){
-  console.log('here');
 }
 
 sketch.keyPressed = function() {
   switch (key) {
-    case 'ArrowUp':
-      stairs.moveStairs('left');
-      break;
-    case 'ArrowDown':
-      stairs.moveStairs('right');
-      break;
     case 'ArrowLeft':
-      // character change direction
+      // player change direction
       player.changeDirection();
       buttons.isClicked(1);
       break;
     case 'ArrowRight':
-      // character go upstair
+      // player go upstair
+      player.goUpStairs();
       buttons.isClicked(2);
       break;
     case ' ':
@@ -63,4 +59,11 @@ sketch.keyPressed = function() {
       break;
   }
   console.log(key);
+}
+
+function subscribeSubjects() {
+  player.subscribe(stairs);
+  player.subscribe(score);
+
+  score.subscribe(player);
 }

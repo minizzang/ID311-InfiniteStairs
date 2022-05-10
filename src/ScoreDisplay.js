@@ -45,14 +45,24 @@ class ScoreDisplay extends Subject {
           this.lifeGauge += amount;
         } else {
           clearInterval(intervalId);
-          this.notifySubscribers('timeout');
+          this.notifySubscribers('scoreTimeout');
         }
       }, 500/this.difficulty);
     }
   }
 
-  update(source, ...others){  // from stairs or character to update score
-
+  update(source, ...others){  // from stairs or player to update score
+    if (source == 'playerGameState') {
+      switch (others[0]) {
+        case 'start':
+          this.setIsPlaying(true);
+          this.setLifeGauge(-1);
+          break;
+        case 'end':
+          this.setIsPlaying(false);
+          break;
+      }
+    }
   }
 }
 

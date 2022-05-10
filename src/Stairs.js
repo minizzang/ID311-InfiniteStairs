@@ -112,8 +112,8 @@ class Stairs extends Subject {
   }
 
   update(source, ...others) {
-    // notice from character step Up
-    if (source == 'character') {
+    // notice from player step Up
+    if (source == 'playerGoUp') {
       switch (others[0]) {
         case 'L':
           this.moveStairs('left');
