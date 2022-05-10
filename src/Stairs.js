@@ -1,5 +1,8 @@
 import brick from '../assets/brick.png'
 
+import { Subject } from './Subject';
+import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
+
 class Step {
   constructor(x, y, width){
     this.x = x;
@@ -26,9 +29,11 @@ class Step {
   }
 }
 
-class Stairs {
-  constructor() {
+class Stairs extends Subject {
+  constructor(startHeight) {
+    super();
     this.state = 'init'; // init, left, right
+    this.startHeight = startHeight;
     this.stairArray = [];
     this.lastPosition = {x: 0, y: 0};
   }
@@ -42,10 +47,10 @@ class Stairs {
 
   getStairs(num) {
     let stepObj, newX, newY;
-    const X = width/2;
-    const Y = height*0.8;
-    const STEP_WIDTH = width/7;
-    const STEP_HEIGHT = width/14;
+    const STEP_WIDTH = width/STEP_WIDTH_RATIO;
+    const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
+    const X = width/2-STEP_WIDTH;
+    const Y = this.startHeight+2*STEP_HEIGHT;
 
     for (let i=0; i<num; i++) {
       const lastX = this.lastPosition.x;
@@ -55,7 +60,7 @@ class Stairs {
         case 'init':
           stepObj = new Step(X, Y, STEP_WIDTH);
           this.stairArray.push(stepObj);
-          this.lastPosition = {x: width/2, y: height*0.8};
+          this.lastPosition = {x: X, y: Y};
           break;
         case 'left':
           newX = lastX-STEP_WIDTH;
@@ -85,8 +90,8 @@ class Stairs {
 
   moveStairs(direction) {
     let stepObj, amountX, amountY;
-    const STEP_WIDTH = width/7;
-    const STEP_HEIGHT = width/14;
+    const STEP_WIDTH = width/STEP_WIDTH_RATIO;
+    const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
 
     amountY = STEP_HEIGHT;
     if (direction == 'left') {
@@ -107,8 +112,17 @@ class Stairs {
   }
 
   update(source, ...others) {
-    // notice from character moving
-    // this.moveStairs
+    // notice from character step Up
+    if (source == 'character') {
+      switch (others[0]) {
+        case 'L':
+          this.moveStairs('left');
+          break;
+        case 'R':
+          this.moveStairs('right');
+          break;
+      }
+    }
   }
 
 }
