@@ -67,7 +67,7 @@ class Player extends Subject {
       this.y -= STEP_HEIGHT;
     }
     this.upCount += 1;
-    this.notifySubscribers('playerGoUp', this.state, this.upCount);
+    this.notifySubscribers('playerGoUp', this.state, this.upCount, this.x, this.y, this.height);
   }
 
   fallDown(){
@@ -81,12 +81,21 @@ class Player extends Subject {
     }
   }
 
+  gameOver(){
+    this.gameState = 'end';
+    this.fallDown();
+    this.notifySubscribers('playerGameState', this.gameState);
+  }
+
   update(source, ...others) {
     // notice from scoreDisplay to alert life gauge is done
     if (source == 'scoreTimeout') {
-      // this.
+      this.gameOver();
     }
     // notice from stair to check player is fall or not
+    if (source == 'stairFall') {
+      this.gameOver();
+    }
   }
 }
 

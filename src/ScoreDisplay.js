@@ -42,7 +42,7 @@ class ScoreDisplay extends Subject {
   setLifeGauge(type){
     if (this.isPlaying) {
       if (type == 'reduce') {
-        if (!this.lifeGauge == 0) {
+        if (!(this.lifeGauge <= 0)) {
           let amount;
           if (this.score < 10) amount = 0.1;
           else if (this.score < 30) amount = 0.2;
@@ -71,7 +71,6 @@ class ScoreDisplay extends Subject {
       switch (others[0]) {
         case 'start':
           this.setIsPlaying(true);
-          // this.setLifeGauge(-1);
           break;
         case 'end':
           this.setIsPlaying(false);

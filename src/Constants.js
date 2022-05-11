@@ -6,3 +6,4 @@ export const MAX_LIFE_GAUGE = 40;
 export const STEP_NUM = 25;
 export const STEP_WIDTH_RATIO = 8;  // width:window width
 export const STEP_WH_RATIO = 1.8;   // width:height
+export const STEP_FALL_ERR = 10;     // offset for checking isFall

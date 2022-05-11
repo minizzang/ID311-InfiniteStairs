@@ -69,4 +69,5 @@ function subscribeSubjects() {
   player.subscribe(score);
 
   score.subscribe(player);
+  stairs.subscribe(player);
 }

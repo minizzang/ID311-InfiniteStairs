@@ -1,7 +1,7 @@
 import brick from '../assets/brick.png'
 
 import { Subject } from './Subject';
-import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
+import { STEP_WIDTH_RATIO, STEP_WH_RATIO, STEP_FALL_ERR } from './Constants';
 
 class Step {
   constructor(x, y, width){
@@ -39,7 +39,6 @@ class Stairs extends Subject {
   }
 
   draw() {
-    imageMode(CORNER);
     for (let step of this.stairArray) {
       step.draw();
     }
@@ -112,10 +111,33 @@ class Stairs extends Subject {
     }
   }
 
+  checkIsFall(Px, Py, Pheight) {
+    let isFall = true;
+    for (let step of this.stairArray) {
+      if (Px > step.x - STEP_FALL_ERR
+      && Px <= step.x + STEP_FALL_ERR
+      && Py + Pheight/2 > step.y - step.height/2 - STEP_FALL_ERR
+      && Py + Pheight/2 <= step.y - step.height/2 + STEP_FALL_ERR) {
+        isFall = false;
+        break;  
+      }
+    }
+    if (isFall == true) {
+      console.log('isFall!');
+      this.notifySubscribers('stairFall');
+    }
+  }
+
   update(source, ...others) {
     // notice from player step Up
     if (source == 'playerGoUp') {
-      this.moveStairs(others[0], others[1])
+      /*
+      others = [
+        'player.state', 'player.upCount',
+        'player.x', 'player.y', 'player.height']
+      */
+      this.moveStairs(others[0], others[1]);
+      this.checkIsFall(others[2], others[3], others[4]);
     }
   }
 
