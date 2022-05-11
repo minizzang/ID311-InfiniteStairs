@@ -31,6 +31,10 @@ class Player extends Subject {
     this.gameState = 'ready';      // ready, playing, end
     this.upCount = 0;
   }
+  
+  registerCallback(callback) {
+    this._callback = callback;
+  }
 
   draw(){
     imageMode(CENTER);
@@ -95,6 +99,10 @@ class Player extends Subject {
     this.gameState = 'end';
     this.fallDown();
     this.notifySubscribers('playerGameState', this.gameState);
+
+    if (this._callback) {   // callback for main.js
+      this._callback();
+    }
   }
 
   update(source, ...others) {
