@@ -88,15 +88,16 @@ class Stairs extends Subject {
     }
   }
 
-  moveStairs(direction) {
+  moveStairs(direction, isMove) {
     let stepObj, amountX, amountY;
     const STEP_WIDTH = width/STEP_WIDTH_RATIO;
     const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
 
-    amountY = STEP_HEIGHT;
-    if (direction == 'left') {
+    (isMove <= 2) ? amountY = 0 : amountY = STEP_HEIGHT;
+
+    if (direction == 'L') {
       amountX = STEP_WIDTH;
-    } else if (direction == 'right') {
+    } else if (direction == 'R') {
       amountX = -STEP_WIDTH;
     }
 
@@ -114,14 +115,7 @@ class Stairs extends Subject {
   update(source, ...others) {
     // notice from player step Up
     if (source == 'playerGoUp') {
-      switch (others[0]) {
-        case 'L':
-          this.moveStairs('left');
-          break;
-        case 'R':
-          this.moveStairs('right');
-          break;
-      }
+      this.moveStairs(others[0], others[1])
     }
   }
 

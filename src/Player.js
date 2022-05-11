@@ -7,6 +7,7 @@ import fallEffectLeft from '../assets/fallEffectLeft.png';
 import fallEffectRight from '../assets/fallEffectRight.png';
 
 import { Subject } from './Subject';
+import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
 
 class Player extends Subject {
   constructor(x, y, width){
@@ -26,8 +27,9 @@ class Player extends Subject {
     this.imgFallEffectLeft = loadImage(fallEffectLeft);
     this.imgFallEffectRight = loadImage(fallEffectRight);
 
-    this.state = 'initial'       // initial, L, R, fallL, fallR
-    this.gameState = 'ready'     // ready, start, end
+    this.state = 'initial';        // initial, L, R, fallL, fallR
+    this.gameState = 'ready';      // ready, start, end
+    this.upCount = 0;
   }
 
   draw(){
@@ -35,9 +37,11 @@ class Player extends Subject {
     image(this.img, this.x, this.y, this.width, this.height);
     if (this.state == 'fallL') {
       image(this.imgFallEffectLeft, this.x+this.width/2+15, this.y-this.height/3, 30, 60);
+      if (this.y < height) this.y += 10;
     }
     else if (this.state == 'fallR') {
       image(this.imgFallEffectRight, this.x-this.width/2-15, this.y-this.height/3, 30, 60);
+      if (this.y < height) this.y += 10;
     }
   }
 
@@ -52,12 +56,18 @@ class Player extends Subject {
   }
 
   goUpStairs(){ // p5 play.js animation 이용하기
+    const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
+    
     if (this.state == 'initial') {
       this.changeDirection();
       this.gameState = 'start';
       this.notifySubscribers('playerGameState', this.gameState);
     }
-    this.notifySubscribers('playerGoUp', this.state);
+    if (this.upCount < 2) {   // for liveness, player's y pos decreases first two steps 
+      this.y -= STEP_HEIGHT;
+    }
+    this.upCount += 1;
+    this.notifySubscribers('playerGoUp', this.state, this.upCount);
   }
 
   fallDown(){
@@ -68,10 +78,6 @@ class Player extends Subject {
     else if (this.state == 'R') {
       this.img = this.imgFallRight;
       this.state = 'fallR';
-    }
-    
-    for (let i=0; i<height; i++) {
-      this.Y += 1;
     }
   }
 
