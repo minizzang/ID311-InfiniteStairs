@@ -46,12 +46,19 @@ class Player extends Subject {
   }
 
   changeDirection(){
-    if (this.state == 'L'){
-      this.state = 'R';
-      this.img = this.imgRight;
-    } else {
+    if (this.state == 'initial') {
       this.state = 'L';
       this.img = this.imgLeft;
+    }
+    else if (this.state == 'L'){
+      this.state = 'R';
+      this.img = this.imgRight;
+      this.goUpStairs();
+    }
+    else if (this.state == 'R'){
+      this.state = 'L';
+      this.img = this.imgLeft;
+      this.goUpStairs();
     }
   }
 
