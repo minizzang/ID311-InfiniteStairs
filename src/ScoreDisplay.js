@@ -9,7 +9,6 @@ class ScoreDisplay extends Subject {
     this.font = loadFont('../assets/PixelMaster.ttf');
     this.leftTopCornerX = (width-width*0.7)/2;
     this.isPlaying = false;       // true when run the game, false when game is over or not yet started.
-    this.difficulty = 1;          // difficulty(level) of the stage.
   }
 
   draw(){
@@ -28,26 +27,42 @@ class ScoreDisplay extends Subject {
     strokeWeight(10);
     fill(255);
     text(`${this.score}`, width/2, 120);
+
+    this.setLifeGauge('reduce');
   }
 
   setIsPlaying(isPlaying){
     this.isPlaying = isPlaying;
   }
 
-  addScore(amount){
-    this.score += amount;
+  setScore(amount){
+    this.score = amount;
   }
 
-  setLifeGauge(amount){
+  setLifeGauge(type){
     if (this.isPlaying) {
-      let intervalId = setInterval(() => {
+      if (type == 'reduce') {
         if (!this.lifeGauge == 0) {
-          this.lifeGauge += amount;
+          let amount;
+          if (this.score < 10) amount = 0.1;
+          else if (this.score < 30) amount = 0.2;
+          else if (this.score < 100) amount = 0.3;
+          else if (this.score < 300) amount = 0.4;
+          else amount = 0.5;
+          this.lifeGauge -= amount;
         } else {
-          clearInterval(intervalId);
           this.notifySubscribers('scoreTimeout');
         }
-      }, 500/this.difficulty);
+      }
+      else if (type == 'add') {
+        let amount;
+        if (this.score < 10) amount = 10;
+        else if (this.score < 30) amount = 8;
+        else if (this.score < 100) amount = 6;
+        else if (this.score < 300) amount = 5;
+        else amount = 4;
+        (this.lifeGauge + amount > MAX_LIFE_GAUGE) ? this.lifeGauge = MAX_LIFE_GAUGE : this.lifeGauge = this.lifeGauge + amount;
+      }
     }
   }
 
@@ -56,12 +71,16 @@ class ScoreDisplay extends Subject {
       switch (others[0]) {
         case 'start':
           this.setIsPlaying(true);
-          this.setLifeGauge(-1);
+          // this.setLifeGauge(-1);
           break;
         case 'end':
           this.setIsPlaying(false);
           break;
       }
+    }
+    else if (source == 'playerGoUp') {
+      this.setScore(others[1]);
+      this.setLifeGauge('add');
     }
   }
 }
