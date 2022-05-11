@@ -1,5 +1,5 @@
-import btnChangeDir from '../assets/btnChangeDir.png';
-import btnGoUp from '../assets/btnGoUp.png';
+import btnChangeDir from '../assets/Images/buttons/btnChangeDir.png';
+import btnGoUp from '../assets/Images/buttons/btnGoUp.png';
 
 class Button {
   constructor(x, y, width){

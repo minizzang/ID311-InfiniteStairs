@@ -1,4 +1,4 @@
-import brick from '../assets/brick.png'
+import brick from '../assets/Images/objects/brick.png'
 
 import { Subject } from './Subject';
 import { STEP_WIDTH_RATIO, STEP_WH_RATIO, STEP_FALL_ERR } from './Constants';

@@ -1,10 +1,10 @@
-import workerInitial from '../assets/workerInitial.png';
-import workerLeft from '../assets/workerLeft.png';
-import workerRight from '../assets/workerRight.png';
-import workerFallLeft from '../assets/workerFallLeft.png';
-import workerFallRight from '../assets/workerFallRight.png';
-import fallEffectLeft from '../assets/fallEffectLeft.png';
-import fallEffectRight from '../assets/fallEffectRight.png';
+import workerInitial from '../assets/Images/worker/workerInitial.png';
+import workerLeft from '../assets/Images/worker/workerLeft.png';
+import workerRight from '../assets/Images/worker/workerRight.png';
+import workerFallLeft from '../assets/Images/worker/workerFallLeft.png';
+import workerFallRight from '../assets/Images/worker/workerFallRight.png';
+import fallEffectLeft from '../assets/Images/objects/fallEffectLeft.png';
+import fallEffectRight from '../assets/Images/objects/fallEffectRight.png';
 
 import { Subject } from './Subject';
 import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
