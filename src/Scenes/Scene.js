@@ -1,11 +1,9 @@
 class Scene {
   constructor(sceneNum) {
     this.sceneNum = sceneNum;
-    this.nextSceneClass = undefined;
   }
 
   draw() {
-
   }
 
   getSceneNum() {
@@ -13,7 +11,12 @@ class Scene {
   }
 
   nextScene() {
-    return this.nextSceneClass;
+  }
+
+  keyPressed() {
+  }
+
+  subscribeSubjects() {
   }
 }
 
