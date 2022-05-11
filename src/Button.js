@@ -37,11 +37,14 @@ class ButtonDisplay {
     this.btnSize = btnSize;
     this.DirBtn = new DirectionButton(width*0.2, height, btnSize);
     this.UpBtn = new UpButton(width*0.8, height, btnSize);
+    this.visible = true;
   }
 
   draw(){
-    this.DirBtn.draw();
-    this.UpBtn.draw();
+    if (this.visible) {
+      this.DirBtn.draw();
+      this.UpBtn.draw();
+    }
   }
 
   isClicked(index){   // 1: direction button, 2: climb button
@@ -51,6 +54,12 @@ class ButtonDisplay {
         // notify stairs?
       case 2:
         
+    }
+  }
+
+  update(source, ...others) {
+    if (source == 'playerGameState') {
+      if (others[0] == 'end') this.visible = false;
     }
   }
 }

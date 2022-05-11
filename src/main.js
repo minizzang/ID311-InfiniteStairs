@@ -67,6 +67,7 @@ sketch.keyPressed = function() {
 function subscribeSubjects() {
   player.subscribe(stairs);
   player.subscribe(score);
+  player.subscribe(buttons);
 
   score.subscribe(player);
   stairs.subscribe(player);

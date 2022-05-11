@@ -28,7 +28,7 @@ class Player extends Subject {
     this.imgFallEffectRight = loadImage(fallEffectRight);
 
     this.state = 'initial';        // initial, L, R, fallL, fallR
-    this.gameState = 'ready';      // ready, start, end
+    this.gameState = 'ready';      // ready, playing, end
     this.upCount = 0;
   }
 
@@ -56,29 +56,32 @@ class Player extends Subject {
   }
 
   goUpStairs(){ // p5 play.js animation 이용하기
-    const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
-    
-    if (this.state == 'initial') {
-      this.changeDirection();
-      this.gameState = 'start';
-      this.notifySubscribers('playerGameState', this.gameState);
-    }
-    if (this.upCount < 2) {   // for liveness, player's y pos decreases first two steps 
-      this.y -= STEP_HEIGHT;
-    }
-    this.upCount += 1;
-    this.notifySubscribers('playerGoUp', this.state, this.upCount, this.x, this.y, this.height);
+    if (this.gameState != 'end') {
+      const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
+      if (this.state == 'initial') {
+        this.changeDirection();
+        this.gameState = 'playing';
+        this.notifySubscribers('playerGameState', this.gameState);
+      }
+      if (this.upCount < 2) {   // for liveness, player's y pos decreases first two steps 
+        this.y -= STEP_HEIGHT;
+      }
+      this.upCount += 1;
+      this.notifySubscribers('playerGoUp', this.state, this.upCount, this.x, this.y, this.height);
+    }   
   }
 
   fallDown(){
-    if (this.state == 'L') {
-      this.img = this.imgFallLeft;
-      this.state = 'fallL';
-    }
-    else if (this.state == 'R') {
-      this.img = this.imgFallRight;
-      this.state = 'fallR';
-    }
+    setTimeout(()=>{
+      if (this.state == 'L') {
+        this.img = this.imgFallLeft;
+        this.state = 'fallL';
+      }
+      else if (this.state == 'R') {
+        this.img = this.imgFallRight;
+        this.state = 'fallR';
+      }
+    }, 500);
   }
 
   gameOver(){

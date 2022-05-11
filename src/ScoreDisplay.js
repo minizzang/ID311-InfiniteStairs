@@ -69,7 +69,7 @@ class ScoreDisplay extends Subject {
   update(source, ...others){  // from stairs or player to update score
     if (source == 'playerGameState') {
       switch (others[0]) {
-        case 'start':
+        case 'playing':
           this.setIsPlaying(true);
           break;
         case 'end':
