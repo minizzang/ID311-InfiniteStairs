@@ -7,21 +7,18 @@ import { Player } from './Player';
 import { ButtonDisplay } from './Button';
 import { Stairs } from './Stairs';
 
-import { STEP_NUM } from './Constants';
+import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants';
 
-let WIDTH, HEIGHT;
 let bg, score, player, buttons, stairs;
 
 sketch.setup = function(){
-  HEIGHT = windowHeight;
-  WIDTH = HEIGHT*0.7;
-  createCanvas (WIDTH, HEIGHT);
+  createCanvas (GAME_WIDTH, GAME_HEIGHT);
 
   bg = new Background(400, 300, 1200);
   score = new ScoreDisplay();
-  player = new Player(WIDTH/2, HEIGHT*0.66, 90);
-  buttons = new ButtonDisplay(WIDTH, HEIGHT*0.9, 110);
-  stairs = new Stairs(HEIGHT*0.65);
+  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
+  buttons = new ButtonDisplay(GAME_WIDTH, GAME_HEIGHT*0.9, 110);
+  stairs = new Stairs(GAME_HEIGHT*0.645);
   stairs.getStairs(STEP_NUM);
 
   subscribeSubjects();
