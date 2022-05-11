@@ -19,7 +19,7 @@ sketch.setup = function(){
 
   bg = new Background(400, 300, 1200);
   score = new ScoreDisplay();
-  player = new Player(WIDTH/2, HEIGHT*0.65, 90);
+  player = new Player(WIDTH/2, HEIGHT*0.66, 90);
   buttons = new ButtonDisplay(WIDTH, HEIGHT*0.9, 110);
   stairs = new Stairs(HEIGHT*0.65);
   stairs.getStairs(STEP_NUM);
@@ -56,6 +56,9 @@ sketch.keyPressed = function() {
       break;
     case '+':
       score.addScore(1);
+      break;
+    case 'f':
+      player.fallDown();
       break;
   }
   console.log(key);
