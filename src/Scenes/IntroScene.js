@@ -1,8 +1,6 @@
 import { PlayScene } from "./PlayScene";
 import { Scene } from "./Scene";
 
-// import title from '../assets/Images/objects/title.png';
-
 class IntroScene extends Scene {
   constructor(bg, player, stairs) {
     super(1);
@@ -19,7 +17,7 @@ class IntroScene extends Scene {
 
   mousePressed() {
     console.log('intro');
-    console.log('change to play');
+    console.log(mouseX, mouseY);
   }
 
   nextScene() {

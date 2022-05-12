@@ -4,7 +4,7 @@ import { Scene } from "./Scene";
 import { ButtonDisplay } from '../Button';
 import { ScoreDisplay } from '../ScoreDisplay.js'
 
-import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from '../Constants';
+import { GAME_WIDTH, GAME_HEIGHT } from '../Constants';
 
 
 class PlayScene extends Scene {
@@ -22,9 +22,9 @@ class PlayScene extends Scene {
   draw() {
     this.bg.draw();
     this.stairs.draw();
-    this.score.draw();
     this.player.draw();
     this.buttons.draw();
+    this.score.draw();
   }
 
   mousePressed() {

@@ -1,10 +1,6 @@
 import { PlayScene } from "./PlayScene";
 import { Scene } from "./Scene";
 
-import { Player } from '../Player';
-import { Stairs } from '../Stairs';
-
-import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from '../Constants';
 
 class GameOverScene extends Scene {
   constructor(bg, player, stairs) {
@@ -18,12 +14,13 @@ class GameOverScene extends Scene {
     this.bg.draw();
     this.stairs.draw();
     this.player.draw();
+
+    text("Game over", width/2, 40);
   }
 
   mousePressed() {
     console.log('gameOver');
     console.log('change to play');
-    // this.nextScene();
   }
 
   nextScene(player, stairs) {

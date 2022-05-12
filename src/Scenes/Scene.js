@@ -3,20 +3,8 @@ class Scene {
     this.sceneNum = sceneNum;
   }
 
-  draw() {
-  }
-
   getSceneNum() {
     return this.sceneNum;
-  }
-
-  nextScene() {
-  }
-
-  keyPressed() {
-  }
-
-  subscribeSubjects() {
   }
 }
 
