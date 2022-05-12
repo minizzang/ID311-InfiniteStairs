@@ -11,6 +11,8 @@ class ScoreDisplay extends Subject {
   }
 
   draw(){
+    rectMode(CORNER);
+
     strokeWeight(6);
     fill(100, 50, 25);
     rect(this.leftTopCornerX, 40, width*0.7, 30);
@@ -31,6 +33,10 @@ class ScoreDisplay extends Subject {
 
   setIsPlaying(isPlaying){
     this.isPlaying = isPlaying;
+  }
+
+  getScore(){
+    return this.score;
   }
 
   setScore(amount){
@@ -75,7 +81,7 @@ class ScoreDisplay extends Subject {
           break;
       }
     }
-    else if (source == 'playerGoUp') {
+    else if (source == 'playerGoUp' && this.isPlaying) {
       this.setScore(others[1]);
       this.setLifeGauge('add');
     }

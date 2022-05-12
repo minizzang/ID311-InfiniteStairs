@@ -123,7 +123,6 @@ class Stairs extends Subject {
       }
     }
     if (isFall == true) {
-      console.log('isFall!');
       this.notifySubscribers('stairFall');
     }
   }

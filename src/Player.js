@@ -95,10 +95,10 @@ class Player extends Subject {
     }, 500);
   }
 
-  gameOver(){
+  gameOver(cause){
     this.gameState = 'end';
     this.fallDown();
-    this.notifySubscribers('playerGameState', this.gameState);
+    this.notifySubscribers('playerGameState', this.gameState, cause);
 
     if (this._callback) {   // callback for main.js
       this._callback();
@@ -108,12 +108,16 @@ class Player extends Subject {
   update(source, ...others) {
     // notice from scoreDisplay to alert life gauge is done
     if (source == 'scoreTimeout') {
-      this.gameOver();
+      this.gameOver('timeout');
     }
     // notice from stair to check player is fall or not
     if (source == 'stairFall') {
-      this.gameOver();
+      this.gameOver('fall');
     }
+  }
+
+  getGameState(){
+    return this.gameState;
   }
 }
 

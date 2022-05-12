@@ -44,21 +44,24 @@ function initObjects() {
 // change the play scene to gameover.
 function gameOver() {
   if (scene.getSceneNum() == 2) {
-    scene = scene.nextScene();
+    setTimeout(()=>{
+      scene = scene.nextScene();
+    }, 700);
   }
 }
 
 sketch.mousePressed = function(){
   if (scene.getSceneNum() == 1) {
     // when press play btn, change from intro scene to play scene
-    scene = scene.nextScene();
+    if (scene.checkBtnPressed('play')) scene = scene.nextScene();
   }
   if (scene.getSceneNum() == 3) {
     // when press replay btn, change from gameover scene to play scene
-    initObjects();
-    scene = scene.nextScene(player, stairs);
+    if (scene.checkBtnPressed('play')) {
+      initObjects();
+      scene = scene.nextScene(bg, player, stairs);
+    }
   }
-  scene.mousePressed();
 }
 
 sketch.keyPressed = function() {

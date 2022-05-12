@@ -4,7 +4,7 @@ import { Scene } from "./Scene";
 import { ButtonDisplay } from '../Button';
 import { ScoreDisplay } from '../ScoreDisplay.js'
 
-import { GAME_WIDTH, GAME_HEIGHT } from '../Constants';
+import { GAME_WIDTH, GAME_HEIGHT, BTN_SIZE } from '../Constants';
 
 
 class PlayScene extends Scene {
@@ -14,7 +14,7 @@ class PlayScene extends Scene {
     this.stairs = stairs;
     this.player = player;
     this.score = new ScoreDisplay();
-    this.buttons = new ButtonDisplay(GAME_WIDTH, GAME_HEIGHT*0.9, 110);
+    this.buttons = new ButtonDisplay(GAME_WIDTH, GAME_HEIGHT*0.9, BTN_SIZE);
 
     this.subscribeSubjects();
   }
@@ -23,8 +23,10 @@ class PlayScene extends Scene {
     this.bg.draw();
     this.stairs.draw();
     this.player.draw();
-    this.buttons.draw();
-    this.score.draw();
+    if (this.player.getGameState() != 'end'){
+      this.buttons.draw();
+      this.score.draw();
+    }
   }
 
   mousePressed() {
@@ -34,28 +36,16 @@ class PlayScene extends Scene {
   }
   
   keyPressed() {
-    console.log(key);
-
     switch (key) {
       case 'ArrowLeft':
         // player change direction
         this.player.changeDirection();
-        this.buttons.isClicked(1);
+        this.buttons.clickEffect(1);
         break;
       case 'ArrowRight':
         // player go upstair
         this.player.goUpStairs();
-        this.buttons.isClicked(2);
-        break;
-      case ' ':
-        this.score.setIsPlaying(true);
-        this.score.setLifeGauge(-1);
-        break;
-      case '+':
-        this.score.addScore(1);
-        break;
-      case 'f':
-        this.player.fallDown();
+        this.buttons.clickEffect(2);
         break;
     }
   }
@@ -70,7 +60,7 @@ class PlayScene extends Scene {
   }
 
   nextScene() {
-    return new GameOverScene(this.bg, this.player, this.stairs);
+    return new GameOverScene(this.bg, this.player, this.stairs, this.score.getScore());
   }
 }
 

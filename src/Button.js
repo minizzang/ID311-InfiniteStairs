@@ -1,12 +1,13 @@
 import btnChangeDir from '../assets/Images/buttons/btnChangeDir.png';
 import btnGoUp from '../assets/Images/buttons/btnGoUp.png';
+import btnPlay from '../assets/Images/buttons/btnPlay.png';
 
 class Button {
-  constructor(x, y, width){
+  constructor(x, y, width, height){
     this.x = x;
     this.y = y;
     this.width = width;
-    this.height = width;
+    this.height = height;
     this.img = undefined;
   }
 
@@ -14,18 +15,33 @@ class Button {
     imageMode(CENTER);
     image(this.img, this.x, this.y, this.width, this.height);
   }
+
+  isClicked(mx, my){
+    if (mx > this.x+this.width/2) return false;
+    if (mx < this.x-this.width/2) return false;
+    if (my > this.y+this.height/2) return false;
+    if (my < this.y-this.height/2) return false;
+    return true;
+  }
+}
+
+class PlayButton extends Button {
+  constructor(x, y, width, height){
+    super(x, y, width, height);
+    this.img = loadImage(btnPlay);
+  }
 }
 
 class DirectionButton extends Button {
   constructor(x, y, width){
-    super(x, y, width);
+    super(x, y, width, width);
     this.img = loadImage(btnChangeDir);
   }
 }
 
 class UpButton extends Button {
   constructor(x, y, width){
-    super(x, y, width);
+    super(x, y, width, width);
     this.img = loadImage(btnGoUp);
   }
 }
@@ -47,7 +63,7 @@ class ButtonDisplay {
     }
   }
 
-  isClicked(index){   // 1: direction button, 2: climb button
+  clickEffect(index){   // 1: direction button, 2: climb button
     switch (index){
       case 1:
         // btn click animation
@@ -64,4 +80,4 @@ class ButtonDisplay {
   }
 }
 
-export { ButtonDisplay }
+export { PlayButton, ButtonDisplay }
