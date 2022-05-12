@@ -1,5 +1,6 @@
 import '../css/style.css';
 import { sketch } from 'p5js-wrapper';
+import 'p5/lib/addons/p5.sound';
 
 import { Background } from './Background.js';
 import { Player } from './Player.js';
@@ -8,18 +9,25 @@ import { IntroScene } from './Scenes/IntroScene.js';
 
 import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants.js';
 
-let bg, player, stairs, scene, font;
+let bg, player, stairs, scene, font, bgm, gameOverSound;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
+function preload() {
+  bgm = loadSound('../assets/Sounds/bgm.mp3');
+  bgm.setVolume(0.1);
+
+  gameOverSound = loadSound('../assets/Sounds/gameOver.mp3');
+  gameOverSound.setVolume(0.5);
+}
 
 sketch.setup = function(){
+  font = loadFont('../assets/PixelMaster.ttf');
+
   createCanvas (GAME_WIDTH, GAME_HEIGHT);
   initObjects();
 
   // init first scene as intro scene
   scene = new IntroScene(bg, player, stairs);
-
-  font = loadFont('../assets/PixelMaster.ttf');
 }
 
 sketch.draw = function(){
@@ -42,23 +50,38 @@ function initObjects() {
 
 // callback for game over.
 // change the play scene to gameover.
-function gameOver() {
+async function gameOver() {
   if (scene.getSceneNum() == 2) {
-    setTimeout(()=>{
-      scene = scene.nextScene();
-    }, 700);
+    await delay(1500);    // wait for player falling animation
+    scene = scene.nextScene();
+    bgm.stop();
+
+    await delay(200);
+    gameOverSound.play();
   }
 }
 
-sketch.mousePressed = function(){
+function delay(ms) {
+  return new Promise((resolve)=>setTimeout(resolve, ms))
+}
+
+sketch.mousePressed = async function(){
   if (scene.getSceneNum() == 1) {
     // when press play btn, change from intro scene to play scene
-    if (scene.checkBtnPressed('play')) scene = scene.nextScene();
+    if (scene.checkBtnPressed('play')) {
+      bgm.loop();
+      scene = scene.nextScene();
+    }
   }
   if (scene.getSceneNum() == 3) {
     // when press replay btn, change from gameover scene to play scene
     if (scene.checkBtnPressed('play')) {
       initObjects();
+      if (gameOverSound.isPlaying()) {
+        gameOverSound.stop();
+      }
+      await delay(200);
+      bgm.play();
       scene = scene.nextScene(bg, player, stairs);
     }
   }
@@ -70,3 +93,5 @@ sketch.keyPressed = function() {
     scene.keyPressed();
   }
 }
+
+window.preload = preload;

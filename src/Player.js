@@ -27,9 +27,14 @@ class Player extends Subject {
     this.imgFallEffectLeft = loadImage(fallEffectLeft);
     this.imgFallEffectRight = loadImage(fallEffectRight);
 
+    this.stepScound = loadSound('../assets/Sounds/step.wav');
+    this.fall1Sound = loadSound('../assets/Sounds/fall1.wav');
+    this.fall2Sound = loadSound('../assets/Sounds/fall2.wav');
+
     this.state = 'initial';        // initial, L, R, fallL, fallR
     this.gameState = 'ready';      // ready, playing, end
     this.upCount = 0;
+    this.effectVisible = false;
   }
   
   registerCallback(callback) {
@@ -39,13 +44,12 @@ class Player extends Subject {
   draw(){
     imageMode(CENTER);
     image(this.img, this.x, this.y, this.width, this.height);
-    if (this.state == 'fallL') {
-      image(this.imgFallEffectLeft, this.x+this.width/2+15, this.y-this.height/3, 30, 60);
-      if (this.y < height) this.y += 10;
-    }
-    else if (this.state == 'fallR') {
-      image(this.imgFallEffectRight, this.x-this.width/2-15, this.y-this.height/3, 30, 60);
-      if (this.y < height) this.y += 10;
+    if (this.effectVisible && this.state == 'L') {
+      image(this.imgFallEffectLeft, this.x+this.width/2+15, this.y-this.height/3, 30, 60);}
+    else if (this.effectVisible && this.state == 'R') {
+      image(this.imgFallEffectRight, this.x-this.width/2-15, this.y-this.height/3, 30, 60);}
+    if (this.state == 'fallL' || this.state == 'fallR') {
+      if (this.y < height) this.y += 15;
     }
   }
 
@@ -68,6 +72,7 @@ class Player extends Subject {
 
   goUpStairs(){ // p5 play.js animation 이용하기
     if (this.gameState != 'end') {
+      this.stepScound.play();
       const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
       if (this.state == 'initial') {
         this.changeDirection();
@@ -82,17 +87,21 @@ class Player extends Subject {
     }   
   }
 
-  fallDown(){
-    setTimeout(()=>{
-      if (this.state == 'L') {
-        this.img = this.imgFallLeft;
-        this.state = 'fallL';
-      }
-      else if (this.state == 'R') {
-        this.img = this.imgFallRight;
-        this.state = 'fallR';
-      }
-    }, 500);
+  async fallDown(){
+    const delay = (ms) => new Promise((resolve)=>setTimeout(resolve, ms));
+    
+    await delay(300);
+    if (this.state == 'L') this.img = this.imgFallLeft;
+    else if (this.state == 'R') this.img = this.imgFallRight;
+    
+    this.fall1Sound.play();
+    this.effectVisible = true;
+    await delay(700);
+    
+    this.state = 'fallL';
+    this.state = 'fallR';
+
+    this.fall2Sound.play();
   }
 
   gameOver(cause){
