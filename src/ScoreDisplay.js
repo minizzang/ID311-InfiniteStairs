@@ -6,7 +6,6 @@ class ScoreDisplay extends Subject {
     super();
     this.score = 0;
     this.lifeGauge = MAX_LIFE_GAUGE/2;
-    this.font = loadFont('../assets/PixelMaster.ttf');
     this.leftTopCornerX = (width-width*0.7)/2;
     this.isPlaying = false;       // true when run the game, false when game is over or not yet started.
   }
@@ -21,7 +20,6 @@ class ScoreDisplay extends Subject {
     rect(this.leftTopCornerX+3, 43, this.lifeGauge/MAX_LIFE_GAUGE*width*0.7, 24);
 
     textAlign(CENTER);
-    textFont(this.font);
     textSize(SCORE_FONT_SIZE);
     stroke(0);  // change color
     strokeWeight(10);

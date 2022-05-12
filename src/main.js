@@ -1,60 +1,69 @@
 import '../css/style.css';
-import {sketch} from 'p5js-wrapper';
+import { sketch } from 'p5js-wrapper';
 
 import { Background } from './Background.js';
-import { Player } from './Player';
-import { Stairs } from './Stairs';
+import { Player } from './Player.js';
+import { Stairs } from './Stairs.js';
+import { IntroScene } from './Scenes/IntroScene.js';
 
-import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants';
-import { IntroScene } from './Scenes/IntroScene';
+import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants.js';
 
-let bg, player, stairs, scene;
+let bg, player, stairs, scene, font;
+
+// SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 
 sketch.setup = function(){
   createCanvas (GAME_WIDTH, GAME_HEIGHT);
+  initObjects();
 
-  bg = new Background(400, 300, 1200);
-  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
-  player.registerCallback(gameOver);
-  stairs = new Stairs(GAME_HEIGHT*0.645);
-  stairs.getStairs(STEP_NUM);
-
+  // init first scene as intro scene
   scene = new IntroScene(bg, player, stairs);
 
-  subscribeSubjects();
+  font = loadFont('../assets/PixelMaster.ttf');
 }
 
 sketch.draw = function(){
+  textFont(font);
   scene.draw();
+}
+
+function initObjects() {
+  // init background
+  bg = new Background(400, 300, 1200);
+  
+  // init a player and register callback for game over
+  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
+  player.registerCallback(gameOver);
+
+  // init stairs
+  stairs = new Stairs(GAME_HEIGHT*0.645);
+  stairs.getStairs(STEP_NUM);
+}
+
+// callback for game over.
+// change the play scene to gameover.
+function gameOver() {
+  if (scene.getSceneNum() == 2) {
+    scene = scene.nextScene();
+  }
 }
 
 sketch.mousePressed = function(){
   if (scene.getSceneNum() == 1) {
-    // IntroScene의 btn이 클릭되었다면
+    // when press play btn, change from intro scene to play scene
     scene = scene.nextScene();
   }
   if (scene.getSceneNum() == 3) {
-    // 재시작 btn이 클릭되었다면
-    player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
-    player.registerCallback(gameOver);
-    stairs = new Stairs(GAME_HEIGHT*0.645);
-    stairs.getStairs(STEP_NUM);
+    // when press replay btn, change from gameover scene to play scene
+    initObjects();
     scene = scene.nextScene(player, stairs);
   }
   scene.mousePressed();
 }
 
 sketch.keyPressed = function() {
-  scene.keyPressed();
-}
-
-function subscribeSubjects() {
-  scene.subscribeSubjects();
-}
-
-function gameOver() {
   if (scene.getSceneNum() == 2) {
-    console.log("Player callback!");
-    scene = scene.nextScene();
+    // for play scene, keyboard input will used
+    scene.keyPressed();
   }
 }
