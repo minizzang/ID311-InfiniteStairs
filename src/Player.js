@@ -1,6 +1,6 @@
 import workerInitial from '../assets/Images/worker/workerInitial.png';
 import workerLeft from '../assets/Images/worker/workerLeft.png';
-import workerRight from '../assets/Images/worker/workerRight.png';
+import workerRight from '../assets/Images/worker/workerRight3.png';
 import workerFallLeft from '../assets/Images/worker/workerFallLeft.png';
 import workerFallRight from '../assets/Images/worker/workerFallRight.png';
 import fallEffectLeft from '../assets/Images/objects/fallEffectLeft.png';
@@ -27,7 +27,11 @@ class Player extends Subject {
     this.imgFallEffectLeft = loadImage(fallEffectLeft);
     this.imgFallEffectRight = loadImage(fallEffectRight);
 
+    // this.stepRightAni = createSprite(600, 200);
+	  // this.stepRightAni.addAnimation('normal', '../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
+    // this.stepRightAni = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
     this.stepScound = loadSound('../assets/Sounds/step.wav');
+    this.stepScound.setVolume(0.08);
     this.fall1Sound = loadSound('../assets/Sounds/fall1.wav');
     this.fall2Sound = loadSound('../assets/Sounds/fall2.wav');
 

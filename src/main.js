@@ -1,6 +1,6 @@
 import '../css/style.css';
-import { sketch } from 'p5js-wrapper';
-import 'p5/lib/addons/p5.sound';
+// import { sketch } from 'p5js-wrapper';
+// import 'p5/lib/addons/p5.sound';
 
 import { Background } from './Background.js';
 import { Player } from './Player.js';
@@ -9,7 +9,7 @@ import { IntroScene } from './Scenes/IntroScene.js';
 
 import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants.js';
 
-let bg, player, stairs, scene, font, bgm, gameOverSound;
+let bg, player, stairs, scene, font, bgm, gameOverSound, ani;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 function preload() {
@@ -17,10 +17,12 @@ function preload() {
   bgm.setVolume(0.1);
 
   gameOverSound = loadSound('../assets/Sounds/gameOver.mp3');
-  gameOverSound.setVolume(0.5);
+  gameOverSound.setVolume(0.2);
+  
+  // ani = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
 }
 
-sketch.setup = function(){
+function setup(){
   font = loadFont('../assets/PixelMaster.ttf');
 
   createCanvas (GAME_WIDTH, GAME_HEIGHT);
@@ -30,9 +32,10 @@ sketch.setup = function(){
   scene = new IntroScene(bg, player, stairs);
 }
 
-sketch.draw = function(){
+function draw(){
   textFont(font);
   scene.draw();
+  // animation(ani, 300, 150);
 }
 
 function initObjects() {
@@ -65,7 +68,7 @@ function delay(ms) {
   return new Promise((resolve)=>setTimeout(resolve, ms))
 }
 
-sketch.mousePressed = async function(){
+async function mousePressed(){
   if (scene.getSceneNum() == 1) {
     // when press play btn, change from intro scene to play scene
     if (scene.checkBtnPressed('play')) {
@@ -87,7 +90,7 @@ sketch.mousePressed = async function(){
   }
 }
 
-sketch.keyPressed = function() {
+function keyPressed() {
   if (scene.getSceneNum() == 2) {
     // for play scene, keyboard input will used
     scene.keyPressed();
@@ -95,3 +98,7 @@ sketch.keyPressed = function() {
 }
 
 window.preload = preload;
+window.setup = setup;
+window.draw = draw;
+window.mousePressed = mousePressed;
+window.keyPressed = keyPressed;
