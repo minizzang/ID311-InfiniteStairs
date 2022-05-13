@@ -9,6 +9,14 @@ import { IntroScene } from './Scenes/IntroScene.js';
 
 import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants.js';
 
+// Import for firebase
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from '../firebaseConfig';
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
 let bg, player, stairs, scene, font, bgm, gameOverSound, ani;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
@@ -18,7 +26,7 @@ function preload() {
 
   gameOverSound = loadSound('../assets/Sounds/gameOver.mp3');
   gameOverSound.setVolume(0.2);
-  
+
   // ani = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
 }
 
