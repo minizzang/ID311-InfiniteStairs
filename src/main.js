@@ -18,7 +18,7 @@ import { firebaseConfig } from '../firebaseConfig';
 const app = initializeApp(firebaseConfig);
 
 
-let bg, player, stairs, scene, font, bgm, gameOverSound, ani;
+let bg, player, stairs, scene, font, bgm, gameOverSound, goUpAnimation;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 function preload() {
@@ -33,7 +33,9 @@ function preload() {
   gameOverSound = loadSound('../assets/Sounds/gameOver.wav');
   gameOverSound.setVolume(0.2);
 
-  // ani = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
+  // goUpAnimation = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
+  let spriteSheet = loadSpriteSheet('../assets/Images/worker/workerRight1.png', 50, 100, 3);
+  goUpAnimation = loadAnimation(spriteSheet);
 }
 
 function setup(){
@@ -57,7 +59,7 @@ function initObjects() {
   bg = new Background(400, 300, 1200);
   
   // init a player and register callback for game over
-  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
+  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100, goUpAnimation);
   player.registerCallback(gameOver);
 
   // init stairs
