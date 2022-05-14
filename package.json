@@ -7,10 +7,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "firebase-tools": "10.9.2",
-    "vite": "^2.7.2"
+    "firebase-tools": "10.7.1",
+    "vite": "^2.8.0"
   },
   "dependencies": {
-    "firebase": "9.8.1"
+    "firebase": "9.6.11",
+    "wav-decoder": "1.3.0",
+    "webaudio-wav-stream-player": "1.0.11"
   }
 }

@@ -1,6 +1,7 @@
 import '../css/style.css';
 // import { sketch } from 'p5js-wrapper';
 // import 'p5/lib/addons/p5.sound';
+import WavPlayer from 'webaudio-wav-stream-player';
 
 import { Background } from './Background.js';
 import { Player } from './Player.js';
@@ -21,10 +22,15 @@ let bg, player, stairs, scene, font, bgm, gameOverSound, ani;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 function preload() {
-  bgm = loadSound('../assets/Sounds/bgm.mp3');
+  // bgm = new Audio('../public/bgm.mp3');
+  // bgm.loop = true;
+
+  // gameOverSound = new Audio('../public/gameOver.MP3');
+
+  bgm = loadSound('../assets/Sounds/bgm.wav');
   bgm.setVolume(0.1);
 
-  gameOverSound = loadSound('../assets/Sounds/gameOver.mp3');
+  gameOverSound = loadSound('../assets/Sounds/gameOver.wav');
   gameOverSound.setVolume(0.2);
 
   // ani = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
@@ -65,7 +71,7 @@ async function gameOver() {
   if (scene.getSceneNum() == 2) {
     await delay(1500);    // wait for player falling animation
     scene = scene.nextScene();
-    bgm.stop();
+    bgm.pause();
 
     await delay(200);
     gameOverSound.play();
@@ -81,6 +87,7 @@ async function mousePressed(){
     // when press play btn, change from intro scene to play scene
     if (scene.checkBtnPressed('play')) {
       bgm.loop();
+      // bgm.play();
       scene = scene.nextScene();
     }
   }
@@ -89,9 +96,10 @@ async function mousePressed(){
     if (scene.checkBtnPressed('play')) {
       initObjects();
       if (gameOverSound.isPlaying()) {
-        gameOverSound.stop();
+        gameOverSound.pause();
       }
       await delay(200);
+      // bgm.load();
       bgm.play();
       scene = scene.nextScene(bg, player, stairs);
     }
