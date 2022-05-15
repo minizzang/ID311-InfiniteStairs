@@ -23,6 +23,18 @@ class Button {
     if (my < this.y-this.height/2) return false;
     return true;
   }
+
+  async clickEffect(){
+    const delay = (ms) => new Promise((resolve)=>setTimeout(resolve, ms));
+
+    this.width -= 30;
+    this.height -= 30;
+
+    await delay(20);
+
+    this.width += 30;
+    this.height += 30;
+  }
 }
 
 class PlayButton extends Button {
@@ -60,16 +72,6 @@ class ButtonDisplay {
     if (this.visible) {
       this.DirBtn.draw();
       this.UpBtn.draw();
-    }
-  }
-
-  clickEffect(index){   // 1: direction button, 2: climb button
-    switch (index){
-      case 1:
-        // btn click animation
-        // notify stairs?
-      case 2:
-        
     }
   }
 

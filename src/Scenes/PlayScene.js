@@ -41,12 +41,12 @@ class PlayScene extends Scene {
         case 'ArrowLeft':
           // player change direction
           this.player.changeDirection();
-          this.buttons.clickEffect(1);
+          this.buttons.DirBtn.clickEffect();
           break;
         case 'ArrowRight':
           // player go upstair
           this.player.goUpStairs();
-          this.buttons.clickEffect(2);
+          this.buttons.UpBtn.clickEffect();
           break;
       }
     }

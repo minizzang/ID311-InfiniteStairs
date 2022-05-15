@@ -30,7 +30,10 @@ class IntroScene extends Scene {
 
   checkBtnPressed(obj) { // play button, ...
     if (obj == 'play') {
-      return this.btnPlay.isClicked(mouseX, mouseY);
+      if (this.btnPlay.isClicked(mouseX, mouseY)) {
+        this.btnPlay.clickEffect();
+        return true;
+      }
     }
   }
 

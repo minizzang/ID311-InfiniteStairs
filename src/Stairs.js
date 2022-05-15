@@ -36,6 +36,7 @@ class Stairs extends Subject {
     this.startHeight = startHeight;
     this.stairArray = [];
     this.lastPosition = {x: 0, y: 0};
+    this.lastStep = 0;
   }
 
   draw() {
@@ -60,6 +61,7 @@ class Stairs extends Subject {
           stepObj = new Step(X, Y, STEP_WIDTH);
           this.stairArray.push(stepObj);
           this.lastPosition = {x: X, y: Y};
+          this.lastStep = stepObj;
           break;
         case 'left':
           newX = lastX-STEP_WIDTH;
@@ -113,17 +115,21 @@ class Stairs extends Subject {
 
   checkIsFall(Px, Py, Pheight) {
     let isFall = true;
-    for (let step of this.stairArray) {
+    for (let i = 0; i<this.stairArray.length; i++) {
+      let step = this.stairArray[i];
       if (Px > step.x - STEP_FALL_ERR
       && Px <= step.x + STEP_FALL_ERR
       && Py + Pheight/2 > step.y - step.height/2 - STEP_FALL_ERR
       && Py + Pheight/2 <= step.y - step.height/2 + STEP_FALL_ERR) {
         isFall = false;
-        break;  
+        this.lastStep = this.stairArray[i];
+        break;
       }
     }
     if (isFall == true) {
-      this.notifySubscribers('stairFall');
+      this.notifySubscribers('stairFall', this.lastStep);
+    } else {
+      this.notifySubscribers('lastStep', this.lastStep)
     }
   }
 

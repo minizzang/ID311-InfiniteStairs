@@ -9,6 +9,7 @@ import workerFallLeft from '../assets/Images/worker/workerFallLeft.png';
 import workerFallRight from '../assets/Images/worker/workerFallRight.png';
 import fallEffectLeft from '../assets/Images/objects/fallEffectLeft.png';
 import fallEffectRight from '../assets/Images/objects/fallEffectRight.png';
+import bag from '../assets/Images/objects/bag.png';
 
 import { Subject } from './Subject';
 import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
@@ -20,7 +21,8 @@ class Player extends Subject {
     this.y = y;
     this.width = width;
     this.height = 0;
-    // this.goUpAnimation = goUpAnimation;
+    this.lastX = 0;
+    this.lastY = 0;
     
     this.img = loadImage(workerInitial, ()=> {
       this.height = this.img.height/this.img.width*this.width;
@@ -35,6 +37,8 @@ class Player extends Subject {
     this.imgFallRight = loadImage(workerFallRight);
     this.imgFallEffectLeft = loadImage(fallEffectLeft);
     this.imgFallEffectRight = loadImage(fallEffectRight);
+    this.bag = loadImage(bag);
+    this.bagY = 0;
 
     // this.stepRightAni = createSprite(600, 200);
 	  // this.stepRightAni.addAnimation('normal', '../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
@@ -44,9 +48,10 @@ class Player extends Subject {
     this.fall1Sound = loadSound('../assets/Sounds/fall1.wav');
     this.fall2Sound = loadSound('../assets/Sounds/fall2.wav');
 
-    this.state = 'initial';        // initial, L, R, fallL, fallR
+    this.state = 'initial';        // initial, L, R, fall
     this.gameState = 'ready';      // ready, playing, end
     this.upCount = 0;
+    this.bagVisible = false;
     this.effectVisible = false;
   }
   
@@ -56,12 +61,16 @@ class Player extends Subject {
 
   draw(){
     imageMode(CENTER);
+    if (this.bagVisible) {
+      image(this.bag, this.lastX, this.bagY, 80, 50);
+      (this.bagY < this.lastY) ? this.bagY += 10 : "";
+    }
     image(this.img, this.x, this.y, this.width, this.height);
     if (this.effectVisible && this.state == 'L') {
       image(this.imgFallEffectLeft, this.x+this.width/2+15, this.y-this.height/3, 30, 60);}
     else if (this.effectVisible && this.state == 'R') {
       image(this.imgFallEffectRight, this.x-this.width/2-15, this.y-this.height/3, 30, 60);}
-    if (this.state == 'fallL' || this.state == 'fallR') {
+    if (this.state == 'fall') {
       if (this.y < height) this.y += 15;
     }
     // animation(this.goUpAnimation, width/2, 150);
@@ -69,8 +78,9 @@ class Player extends Subject {
 
   async changeDirection(){
     if (this.state == 'initial') {
-      this.state = 'L';
-      this.img = this.imgLeft;
+      this.state = 'R';
+      this.goUpStairs();
+      this.fallDown();
     }
     else if (this.state == 'L'){
       this.state = 'R';
@@ -78,7 +88,6 @@ class Player extends Subject {
     }
     else if (this.state == 'R'){
       this.state = 'L';
-      this.img = this.imgLeft;
       this.goUpStairs();
     }
   }
@@ -111,12 +120,12 @@ class Player extends Subject {
     }
   }
 
-  goUpStairs(){ // p5 play.js animation 이용하기
+  goUpStairs(){
     if (this.gameState != 'end') {
       this.stepScound.play();
       const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
       if (this.state == 'initial') {
-        this.changeDirection();
+        this.state = 'L';
         this.gameState = 'playing';
         this.notifySubscribers('playerGameState', this.gameState);
       }
@@ -126,7 +135,7 @@ class Player extends Subject {
       this.upCount += 1;
       this.goUpAnimation();
       this.notifySubscribers('playerGoUp', this.state, this.upCount, this.x, this.y, this.height);
-    }   
+    }
   }
 
   async fallDown(){
@@ -136,10 +145,12 @@ class Player extends Subject {
     
     this.fall1Sound.play();
     this.effectVisible = true;
-    await this.delay(700);
-    
-    this.state = 'fallL';
-    this.state = 'fallR';
+
+    await this.delay(100);
+    this.bagVisible = true;
+
+    await this.delay(600);
+    this.state = 'fall';
 
     this.fall2Sound.play();
   }
@@ -162,6 +173,15 @@ class Player extends Subject {
     // notice from stair to check player is fall or not
     if (source == 'stairFall') {
       this.gameOver('fall');
+      this.lastX = others[0].x;
+      this.lastY = others[0].y-40;
+      this.bagY = others[0].y-100;
+    }
+    // lastStep for scoreTimeout gameover
+    if (source == 'lastStep') {
+      this.lastX = others[0].x;
+      this.lastY = others[0].y-40;
+      this.bagY = others[0].y-100;
     }
   }
 
