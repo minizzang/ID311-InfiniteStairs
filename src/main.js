@@ -84,34 +84,39 @@ function delay(ms) {
   return new Promise((resolve)=>setTimeout(resolve, ms))
 }
 
-async function mousePressed(){
-  if (scene.getSceneNum() == 1) {
-    // when press play btn, change from intro scene to play scene
+function mousePressed(){
+  // 1: when press play btn, change from intro scene to play scene
+  // 3: when press replay btn, change from gameover scene to play scene
+  if (scene.getSceneNum() == 1 || scene.getSceneNum() == 3) {
     if (scene.checkBtnPressed('play')) {
-      bgm.loop();
-      // bgm.play();
-      scene = scene.nextScene();
-    }
-  }
-  if (scene.getSceneNum() == 3) {
-    // when press replay btn, change from gameover scene to play scene
-    if (scene.checkBtnPressed('play')) {
-      initObjects();
-      if (gameOverSound.isPlaying()) {
-        gameOverSound.pause();
-      }
-      await delay(200);
-      // bgm.load();
-      bgm.play();
-      scene = scene.nextScene(bg, player, stairs);
+      playGame(scene.getSceneNum());
     }
   }
 }
 
 function keyPressed() {
+  // play button works on space bar also
+  if (key == " " && (scene.getSceneNum() == 1 || scene.getSceneNum() == 3)) {
+    playGame(scene.getSceneNum());
+  }
+  // for play scene, keyboard input will used
   if (scene.getSceneNum() == 2) {
-    // for play scene, keyboard input will used
     scene.keyPressed();
+  }
+}
+
+async function playGame(sceneNum) {
+  if (sceneNum == 1) {
+    bgm.loop();
+    scene = scene.nextScene();
+  } else if (sceneNum == 3) {
+    initObjects();
+    if (gameOverSound.isPlaying()) {
+      gameOverSound.pause();
+    }
+    await delay(200);
+    bgm.play();
+    scene = scene.nextScene(bg, player, stairs);
   }
 }
 

@@ -12,6 +12,7 @@ class ScoreDisplay extends Subject {
 
   draw(){
     rectMode(CORNER);
+    stroke(0);
 
     strokeWeight(6);
     fill(100, 50, 25);
