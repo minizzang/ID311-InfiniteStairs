@@ -3,7 +3,7 @@
 import { PlayScene } from "./PlayScene";
 import { Scene } from "./Scene";
 
-import { GAMEOVER_FS, BTN_SIZE } from "../Constants";
+import { GAMEOVER_FS, ATTRIBUTE_SIZE, TEXT_SIZE_L, TEXT_SIZE_M, BTN_SIZE } from "../Constants";
 import { PlayButton } from '../Button';
 
 class GameOverScene extends Scene {
@@ -18,6 +18,7 @@ class GameOverScene extends Scene {
   }
 
   draw() {
+    textAlign(CENTER);
     this.bg.draw();
     this.stairs.draw();
     this.player.draw();
@@ -35,9 +36,13 @@ class GameOverScene extends Scene {
     rect(width/2, height*0.45, width*0.8, width*0.8);
 
     // TODO: design
+    textSize(ATTRIBUTE_SIZE);
     text("BEST SCORE", width/2, height*0.3);
+    textSize(TEXT_SIZE_M);
     text("516", width/2, height*0.4);
+    textSize(ATTRIBUTE_SIZE);
     text("SCORE", width/2, height*0.5);
+    textSize(TEXT_SIZE_L);
     text(`${this.score}`, width/2, height*0.6);
 
     this.btnPlay.draw();

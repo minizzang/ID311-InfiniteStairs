@@ -26,7 +26,7 @@ class ScoreDisplay extends Subject {
     stroke(0);  // change color
     strokeWeight(10);
     fill(255);
-    text(`${this.score}`, width/2, 120);
+    text(`${this.score}`, width/2, 140);
 
     this.setLifeGauge('reduce');
   }

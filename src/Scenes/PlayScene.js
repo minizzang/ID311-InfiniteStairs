@@ -36,17 +36,19 @@ class PlayScene extends Scene {
   }
   
   keyPressed() {
-    switch (key) {
-      case 'ArrowLeft':
-        // player change direction
-        this.player.changeDirection();
-        this.buttons.clickEffect(1);
-        break;
-      case 'ArrowRight':
-        // player go upstair
-        this.player.goUpStairs();
-        this.buttons.clickEffect(2);
-        break;
+    if (this.player.getGameState() != 'end'){
+      switch (key) {
+        case 'ArrowLeft':
+          // player change direction
+          this.player.changeDirection();
+          this.buttons.clickEffect(1);
+          break;
+        case 'ArrowRight':
+          // player go upstair
+          this.player.goUpStairs();
+          this.buttons.clickEffect(2);
+          break;
+      }
     }
   }
 

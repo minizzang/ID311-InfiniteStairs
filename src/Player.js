@@ -92,7 +92,7 @@ class Player extends Subject {
       await this.delay(30);
       this.img = this.imgLeft2;
       this.width = this.img.width/this.img.height*this.height;
-      await this.delay(30);
+      await this.delay(50);
       this.img = this.imgLeft3;
       this.height = defaultHight;
       this.width = this.img.width/this.img.height*this.height;
@@ -104,7 +104,7 @@ class Player extends Subject {
       await this.delay(30);
       this.img = this.imgRight2;
       this.width = this.img.width/this.img.height*this.height;
-      await this.delay(30);
+      await this.delay(50);
       this.img = this.imgRight3;
       this.height = defaultHight;
       this.width = this.img.width/this.img.height*this.height;

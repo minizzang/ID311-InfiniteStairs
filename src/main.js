@@ -39,7 +39,7 @@ function preload() {
 }
 
 function setup(){
-  font = loadFont('../assets/PixelMaster.ttf');
+  font = loadFont('../assets/PixelIntv.otf');
 
   createCanvas (GAME_WIDTH, GAME_HEIGHT);
   initObjects();
