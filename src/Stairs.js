@@ -15,6 +15,14 @@ class Step {
     });
     this.num = 0;
     this.bestScoreImg = loadImage(scoreFlag);
+    this.kickScoreFlag = false;
+    this.flagVisible = true;
+    this.angle = 10;
+    this.flagWidth = 80;
+    this.flagX = 0;
+    this.flagY = 0;
+
+    this.kickSound = loadSound('../assets/Sounds/kick.mp3');
   }
 
   draw() {
@@ -24,9 +32,32 @@ class Step {
 
   // separate width brick draw for flag is always front of other steps
   flagDraw(bestScore) {
-    if (bestScore != 0 && (this.num == bestScore)) {
-      image(this.bestScoreImg, this.x, this.y-this.height/2-50, 80, 100);
+    if (this.kickScoreFlag) {
+      push();
+
+      this.angle += 20;
+      this.flagWidth += 5;
+      angleMode(DEGREES);
+      translate(this.x, this.y-35/2-50);
+      rotate(this.angle);
+      image(this.bestScoreImg, this.flagX, this.flagY, this.flagWidth, this.flagWidth*1.25);
+      this.flagX += 15;
+      this.flagY += 15;
+
+      pop();
     }
+    if (this.flagVisible && bestScore != 0 && (this.num == bestScore)) {
+      image(this.bestScoreImg, this.x, this.y-35/2-50, this.flagWidth, this.flagWidth*1.25);
+    }
+  }
+
+  kickScore() {
+    this.flagVisible = false;
+    this.kickScoreFlag = true;
+    this.kickSound.play();
+    setTimeout(()=> {
+      this.kickScoreFlag = false;
+    }, 3000);
   }
 
   getXY() {
@@ -150,6 +181,9 @@ class Stairs extends Subject {
       this.notifySubscribers('stairFall', this.lastStep);
     } else {
       this.notifySubscribers('lastStep', this.lastStep);
+      if (this.lastStep.num == this.bestScore) {
+        this.lastStep.kickScore();
+      }
     }
   }
 
