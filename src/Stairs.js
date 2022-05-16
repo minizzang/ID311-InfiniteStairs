@@ -1,4 +1,5 @@
 import brick from '../assets/Images/objects/brick.png'
+import scoreFlag from '../assets/Images/objects/bestScore.png'
 
 import { Subject } from './Subject';
 import { STEP_WIDTH_RATIO, STEP_WH_RATIO, STEP_FALL_ERR } from './Constants';
@@ -12,11 +13,20 @@ class Step {
     this.img = loadImage(brick, ()=>{
       this.height = this.img.height/this.img.width*this.width;
     });
+    this.num = 0;
+    this.bestScoreImg = loadImage(scoreFlag);
   }
 
   draw() {
     imageMode(CENTER);
     image(this.img, this.x, this.y, this.width, this.height);
+  }
+
+  // separate width brick draw for flag is always front of other steps
+  flagDraw(bestScore) {
+    if (bestScore != 0 && (this.num == bestScore)) {
+      image(this.bestScoreImg, this.x, this.y-this.height/2-50, 80, 100);
+    }
   }
 
   getXY() {
@@ -30,18 +40,23 @@ class Step {
 }
 
 class Stairs extends Subject {
-  constructor(startHeight) {
+  constructor(startHeight, bestScore) {
     super();
     this.state = 'init'; // init, left, right
     this.startHeight = startHeight;
     this.stairArray = [];
     this.lastPosition = {x: 0, y: 0};
     this.lastStep = 0;
+    this.stepCount = 0;
+    this.bestScore = bestScore;
   }
 
   draw() {
     for (let step of this.stairArray) {
       step.draw();
+    }
+    for (let step of this.stairArray) {
+      step.flagDraw(this.bestScore);
     }
   }
 
@@ -55,10 +70,12 @@ class Stairs extends Subject {
     for (let i=0; i<num; i++) {
       const lastX = this.lastPosition.x;
       const lastY = this.lastPosition.y;
+      this.stepCount += 1;
 
       switch (this.state) {
         case 'init':
           stepObj = new Step(X, Y, STEP_WIDTH);
+          stepObj.num = this.stepCount;
           this.stairArray.push(stepObj);
           this.lastPosition = {x: X, y: Y};
           this.lastStep = stepObj;
@@ -67,6 +84,7 @@ class Stairs extends Subject {
           newX = lastX-STEP_WIDTH;
           newY = lastY-STEP_HEIGHT;
           stepObj = new Step(newX, newY, STEP_WIDTH);
+          stepObj.num = this.stepCount;
           this.stairArray.push(stepObj);
           this.lastPosition = {x: newX, y: newY};
           break;
@@ -74,6 +92,7 @@ class Stairs extends Subject {
           newX = lastX+STEP_WIDTH;
           newY = lastY-STEP_HEIGHT;
           stepObj = new Step(newX, newY, STEP_WIDTH);
+          stepObj.num = this.stepCount;
           this.stairArray.push(stepObj);
           this.lastPosition = {x: newX, y: newY};
           break;
@@ -130,7 +149,7 @@ class Stairs extends Subject {
     if (isFall == true) {
       this.notifySubscribers('stairFall', this.lastStep);
     } else {
-      this.notifySubscribers('lastStep', this.lastStep)
+      this.notifySubscribers('lastStep', this.lastStep);
     }
   }
 

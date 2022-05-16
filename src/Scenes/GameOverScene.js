@@ -18,13 +18,13 @@ class GameOverScene extends Scene {
     this.btnPlay = new PlayButton (width/2, height*0.9, BTN_SIZE, BTN_SIZE*0.8);
   }
 
-  setBestScore() {
-    let storedBestScore = localStorage.getItem('bestScore');
-    if (storedBestScore == null || this.score > storedBestScore) {
-      localStorage.setItem('bestScore', this.score);
-      storedBestScore = this.score;
-    }
+  setBestScore(storedBestScore) {
     this.bestScore = storedBestScore;
+    
+    if (this.score > storedBestScore) {
+      localStorage.setItem('bestScore', this.score);
+      this.bestScore = this.score;
+    }
   }
 
   draw() {
@@ -34,12 +34,12 @@ class GameOverScene extends Scene {
     this.player.draw();
 
     fill(255);
-    textSize(GAMEOVER_FS);
     stroke(93, 25, 8);
-    strokeWeight(20);
+    textSize(GAMEOVER_FS);
+    strokeWeight(15);
     textStyle(BOLD);
     text("GAME OVER", width/2, 120);
-
+    
     rectMode(CENTER);
     strokeWeight(8);
     fill(255, 227, 147, 150);

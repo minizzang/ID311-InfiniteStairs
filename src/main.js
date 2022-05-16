@@ -37,7 +37,7 @@ sketch.setup = function(){
   scene = new IntroScene(bg, player, stairs);
 }
 
-sketch.draw= function(){
+sketch.draw = function(){
   textFont(font);
   scene.draw();
 }
@@ -50,8 +50,14 @@ function initObjects() {
   player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
   player.registerCallback(gameOver);
 
+  // load bestScore
+  let bestScore = localStorage.getItem('bestScore');
+  if (bestScore == null) {
+    bestScore = 0;
+  }
+  
   // init stairs
-  stairs = new Stairs(GAME_HEIGHT*0.645);
+  stairs = new Stairs(GAME_HEIGHT*0.645, bestScore);
   stairs.getStairs(STEP_NUM);
 }
 
@@ -61,7 +67,14 @@ async function gameOver() {
   if (scene.getSceneNum() == 2) {
     await delay(1500);    // wait for player falling animation
     scene = scene.nextScene();
-    scene.setBestScore();
+
+    // load bestScore
+    let bestScore = localStorage.getItem('bestScore');
+    if (bestScore == null) {
+      bestScore = 0;
+    }
+
+    scene.setBestScore(bestScore);
     bgm.stop();
 
     await delay(200);
