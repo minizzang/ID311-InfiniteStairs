@@ -26,10 +26,10 @@ class Background {
     if (source == 'moveStairs') {
       switch (others[0]) {
         case 'L':
-          this.movePosition(10, 10);
+          this.movePosition(5, 10);
           break;
         case 'R':
-          this.movePosition(-10, 10);
+          this.movePosition(-5, 10);
           break;
       }
     }

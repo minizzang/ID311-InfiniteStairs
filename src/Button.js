@@ -2,7 +2,7 @@ import btnChangeDir from '../assets/Images/buttons/btnChangeDir.png';
 import btnGoUp from '../assets/Images/buttons/btnGoUp.png';
 import btnPlay from '../assets/Images/buttons/btnPlay.png';
 
-import { BTN_SIZE } from './Constants';
+import { BTN_SIZE, TEXT_SIZE_S } from './Constants';
 
 class Button {
   constructor(x, y, width, height){
@@ -76,7 +76,8 @@ class ButtonDisplay {
       if (this.guideVisible) {
         rectMode(CENTER);
         noStroke();
-        
+        textSize(TEXT_SIZE_S);
+
         fill(94, 25, 8, 200);
         rect(this.DirBtn.x, this.DirBtn.y-BTN_SIZE/2, this.DirBtn.width-20, this.DirBtn.height, 20);
         textAlign(CENTER);

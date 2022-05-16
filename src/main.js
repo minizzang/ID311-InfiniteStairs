@@ -1,5 +1,6 @@
 import '../css/style.css';
-import WavPlayer from 'webaudio-wav-stream-player';
+import { sketch } from 'p5js-wrapper';
+import 'p5/lib/addons/p5.sound';
 
 import { Background } from './Background.js';
 import { Player } from './Player.js';
@@ -15,7 +16,7 @@ import { firebaseConfig } from '../firebaseConfig';
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-let bg, player, stairs, scene, font, bgm, gameOverSound, goUpAnimation;
+let bg, player, stairs, scene, font, bgm, gameOverSound;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 function preload() {
@@ -26,7 +27,7 @@ function preload() {
   gameOverSound.setVolume(0.2);
 }
 
-function setup(){
+sketch.setup = function(){
   font = loadFont('../assets/PixelIntv.otf');
 
   createCanvas (GAME_WIDTH, GAME_HEIGHT);
@@ -36,10 +37,9 @@ function setup(){
   scene = new IntroScene(bg, player, stairs);
 }
 
-function draw(){
+sketch.draw= function(){
   textFont(font);
   scene.draw();
-  // animation(ani, 300, 150);
 }
 
 function initObjects() {
@@ -73,7 +73,7 @@ function delay(ms) {
   return new Promise((resolve)=>setTimeout(resolve, ms))
 }
 
-function mousePressed(){
+sketch.mousePressed = function(){
   // 1: when press play btn, change from intro scene to play scene
   // 3: when press replay btn, change from gameover scene to play scene
   if (scene.getSceneNum() == 1 || scene.getSceneNum() == 3) {
@@ -83,7 +83,7 @@ function mousePressed(){
   }
 }
 
-function keyPressed() {
+sketch.keyPressed = function(){
   // play button works on space bar also
   if (key == " " && (scene.getSceneNum() == 1 || scene.getSceneNum() == 3)) {
     playGame(scene.getSceneNum());
@@ -97,20 +97,17 @@ function keyPressed() {
 async function playGame(sceneNum) {
   if (sceneNum == 1) {
     bgm.loop();
+    await delay(200);
     scene = scene.nextScene();
   } else if (sceneNum == 3) {
     initObjects();
     if (gameOverSound.isPlaying()) {
       gameOverSound.stop();
     }
-    await delay(200);
+    await delay(300);
     bgm.play();
     scene = scene.nextScene(bg, player, stairs);
   }
 }
 
 window.preload = preload;
-window.setup = setup;
-window.draw = draw;
-window.mousePressed = mousePressed;
-window.keyPressed = keyPressed;

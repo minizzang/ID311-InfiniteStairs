@@ -16,6 +16,8 @@ export const BTN_SIZE = 110;
 
 // for gameOver
 export const GAMEOVER_FS = 65;       // FS for FontSize
-export const ATTRIBUTE_SIZE = 30;
+export const ATTRIBUTE_SIZE_L = 40;
+export const ATTRIBUTE_SIZE_M = 30;
 export const TEXT_SIZE_L = 70;
 export const TEXT_SIZE_M = 45;
+export const TEXT_SIZE_S = 14;

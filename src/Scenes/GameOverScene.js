@@ -3,7 +3,7 @@
 import { PlayScene } from "./PlayScene";
 import { Scene } from "./Scene";
 
-import { GAMEOVER_FS, ATTRIBUTE_SIZE, TEXT_SIZE_L, TEXT_SIZE_M, BTN_SIZE } from "../Constants";
+import { GAMEOVER_FS, ATTRIBUTE_SIZE_M, ATTRIBUTE_SIZE_L, TEXT_SIZE_L, TEXT_SIZE_M, BTN_SIZE } from "../Constants";
 import { PlayButton } from '../Button';
 
 class GameOverScene extends Scene {
@@ -35,23 +35,26 @@ class GameOverScene extends Scene {
 
     fill(255);
     textSize(GAMEOVER_FS);
-    stroke(172, 62, 26);
+    stroke(93, 25, 8);
     strokeWeight(20);
     textStyle(BOLD);
     text("GAME OVER", width/2, 120);
 
     rectMode(CENTER);
-    strokeWeight(10);
+    strokeWeight(8);
     fill(255, 227, 147, 150);
-    rect(width/2, height*0.45, width*0.8, width*0.8);
+    rect(width/2, height*0.45, width*0.8, width*0.8, 20);
 
-    // TODO: design
-    textSize(ATTRIBUTE_SIZE);
+    strokeWeight(10);
+    textSize(ATTRIBUTE_SIZE_M);
     text("BEST SCORE", width/2, height*0.3);
+    textSize(ATTRIBUTE_SIZE_L);
+    fill(214, 253, 88);
+    text("SCORE", width/2, height*0.5);
+    
+    fill(242, 242, 227);
     textSize(TEXT_SIZE_M);
     text(`${this.bestScore}`, width/2, height*0.4);
-    textSize(ATTRIBUTE_SIZE);
-    text("SCORE", width/2, height*0.5);
     textSize(TEXT_SIZE_L);
     text(`${this.score}`, width/2, height*0.6);
 

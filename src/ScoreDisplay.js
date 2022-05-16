@@ -12,19 +12,22 @@ class ScoreDisplay extends Subject {
 
   draw(){
     rectMode(CORNER);
-    stroke(0);
+    stroke(81, 22, 9);
 
     strokeWeight(6);
-    fill(100, 50, 25);
-    rect(this.leftTopCornerX, 40, width*0.7, 30);
+    fill(250, 224, 152);
+    rect(this.leftTopCornerX-12, 30, width*0.75, 50, 20);
+
+    fill(83, 68, 54);
+    rect(this.leftTopCornerX, 40, width*0.7, 30, 10);
     
     strokeWeight(0);
-    fill(255, 0, 0);
-    rect(this.leftTopCornerX+3, 43, this.lifeGauge/MAX_LIFE_GAUGE*width*0.7, 24);
+    fill(188, 77, 48);
+    rect(this.leftTopCornerX+3, 43, this.lifeGauge/MAX_LIFE_GAUGE*width*0.7-6, 24, 10);
 
     textAlign(CENTER);
     textSize(SCORE_FONT_SIZE);
-    stroke(0);  // change color
+    stroke(81, 22, 9);
     strokeWeight(10);
     fill(255);
     text(`${this.score}`, width/2, 140);

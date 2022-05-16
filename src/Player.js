@@ -41,8 +41,8 @@ class Player extends Subject {
     this.bag = loadImage(bag);
     this.bagY = 0;
 
-    this.stepScound = loadSound('../assets/Sounds/step.wav');
-    this.stepScound.setVolume(0.08);
+    this.stepSound = loadSound('../assets/Sounds/step.wav');
+    this.stepSound.setVolume(0.08);
     this.fall1Sound = loadSound('../assets/Sounds/fall1.wav');
     this.fall2Sound = loadSound('../assets/Sounds/fall2.wav');
 
@@ -71,6 +71,7 @@ class Player extends Subject {
     if (this.state == 'fall') {
       if (this.y < height) this.y += 15;
     }
+    // animation(this.goUpAnimation, width/2, 150);
   }
 
   changeDirection(){
@@ -119,7 +120,7 @@ class Player extends Subject {
 
   goUpStairs(){
     if (this.gameState != 'end') {
-      this.stepScound.play();
+      this.stepSound.play();
       const STEP_HEIGHT = width/(STEP_WIDTH_RATIO*STEP_WH_RATIO);
       if (this.state == 'initial') {
         this.state = 'L';
