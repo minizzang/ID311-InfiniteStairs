@@ -28,12 +28,6 @@ class PlayScene extends Scene {
       this.score.draw();
     }
   }
-
-  mousePressed() {
-    console.log('play');
-    console.log('change to gameOver');
-    this.nextScene();
-  }
   
   keyPressed() {
     if (this.player.getGameState() != 'end'){

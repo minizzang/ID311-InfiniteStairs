@@ -61,7 +61,7 @@ class GameOverScene extends Scene {
     this.btnPlay.draw();
   }
 
-  checkBtnPressed(obj) { // play button, ...
+  checkBtnPressed(obj) { // for scalability
     if (obj == 'play') {
       if (this.btnPlay.isClicked(mouseX, mouseY)) {
         this.btnPlay.clickEffect();

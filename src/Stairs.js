@@ -132,7 +132,7 @@ class Stairs extends Subject {
       if (this.stairArray.length == 1) {
         this.state = 'left';    // always start with left step
       } else {
-        if (Math.random() > 0.6) {   // TODO: may have to change this logit
+        if (Math.random() > 0.6) {
           this.state == 'left' ? this.state = 'right' : this.state = 'left';
         }
       }

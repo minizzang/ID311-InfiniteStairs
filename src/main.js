@@ -19,11 +19,11 @@ const app = initializeApp(firebaseConfig);
 let bg, player, stairs, scene, font, bgm, gameOverSound;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
-function preload() {
-  bgm = loadSound('../assets/Sounds/bgm.wav');
+async function preload() {
+  bgm = await loadSound('../assets/Sounds/bgm.wav');
   bgm.setVolume(0.1);
 
-  gameOverSound = loadSound('../assets/Sounds/gameOver.wav');
+  gameOverSound = await loadSound('../assets/Sounds/gameOver.wav');
   gameOverSound.setVolume(0.2);
 }
 
