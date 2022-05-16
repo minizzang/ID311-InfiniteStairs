@@ -18,14 +18,14 @@ The goal of this game is **to climb many stairs and score as much as possible.**
    
    |Intro|Play|GameOver|
    |:---:|:---:|:---:|
-   |<img src="assets/Images/description/introScene.jpg" width="98%"/>|<img src="assets/Images/description/playScene.jpg" width="100%"/>|<img src="assets/Images/description/gameOverScene.jpg" width="87%" />|
+   |<img src="assets/Images/description/introScene.JPG" width="98%"/>|<img src="assets/Images/description/playScene.JPG" width="100%"/>|<img src="assets/Images/description/gameOverScene.JPG" width="87%" />|
 
 - Objects of the game
 
    |Object|Image|Description|
    |:---:|:---:|:---:|
    |<img src="assets/Images/worker/workerInitial.png" height=100/>|Player|There are many images of different postures of player|
-   |<img src="assets/Images/description/scoreDisplay.jpg" height=60/>|ScoreDisplay|Life gauge is decrease as time goes and increase when the player go upstairs|
+   |<img src="assets/Images/description/scoreDisplay.JPG" height=60/>|ScoreDisplay|Life gauge is decrease as time goes and increase when the player go upstairs|
    |<img src="assets/Images/objects/brick.png" height=40/>|Stairs|StairArray is consist of 25 steps|
 
 - Actions and Buttons
