@@ -18,7 +18,7 @@ The goal of this game is **to climb many stairs and score as much as possible.**
    
    |Intro|Play|GameOver|
    |:---:|:---:|:---:|
-   |<img src="assets/Images/description/introScene.JPG" width="98%"/>|<img src="assets/Images/description/playScene.JPG" width="100%"/>|<img src="assets/Images/description/gameOverScene.JPG" width="87%" />|
+   |<img src="assets/Images/description/introScene.JPG" width="100%"/>|<img src="assets/Images/description/playScene.JPG" width="100%"/>|<img src="assets/Images/description/gameOverScene.JPG" width="95%" />|
 
 - Objects of the game
 
@@ -31,7 +31,7 @@ The goal of this game is **to climb many stairs and score as much as possible.**
 - Actions and Buttons
 
    |Button image|Action|User input|
-   |---|---|---|
+   |:---:|:---:|:---:|
    |<img src="assets/Images/buttons/btnPlay.png" height=60/>|start the game|Mouse click or Space bar |
    |<img src="assets/Images/buttons/btnChangeDir.png" height=80/>|change direction|Left|
    |<img src="assets/Images/buttons/btnGoUp.png" height=80/>|climb one stair|Right|
