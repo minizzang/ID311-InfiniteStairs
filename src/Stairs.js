@@ -111,6 +111,7 @@ class Stairs extends Subject {
       this.lastPosition = this.stairArray.at(-1).getXY();
       this.getStairs(1);
     }
+    this.notifySubscribers('moveStairs', direction);
   }
 
   checkIsFall(Px, Py, Pheight) {

@@ -15,7 +15,7 @@ import { Subject } from './Subject';
 import { STEP_WIDTH_RATIO, STEP_WH_RATIO } from './Constants';
 
 class Player extends Subject {
-  constructor(x, y, width, goUpAnimation){
+  constructor(x, y, width){
     super();
     this.x = x;
     this.y = y;
@@ -25,7 +25,8 @@ class Player extends Subject {
     this.lastY = 0;
     
     this.img = loadImage(workerInitial, ()=> {
-      this.height = this.img.height/this.img.width*this.width;
+      this.defaultHeight = this.img.height/this.img.width*this.width;
+      this.height = this.defaultHeight;
     });
     this.imgRight1 = loadImage(workerRight1);
     this.imgRight2 = loadImage(workerRight2);
@@ -40,9 +41,6 @@ class Player extends Subject {
     this.bag = loadImage(bag);
     this.bagY = 0;
 
-    // this.stepRightAni = createSprite(600, 200);
-	  // this.stepRightAni.addAnimation('normal', '../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
-    // this.stepRightAni = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
     this.stepScound = loadSound('../assets/Sounds/step.wav');
     this.stepScound.setVolume(0.08);
     this.fall1Sound = loadSound('../assets/Sounds/fall1.wav');
@@ -73,10 +71,9 @@ class Player extends Subject {
     if (this.state == 'fall') {
       if (this.y < height) this.y += 15;
     }
-    // animation(this.goUpAnimation, width/2, 150);
   }
 
-  async changeDirection(){
+  changeDirection(){
     if (this.state == 'initial') {
       this.state = 'R';
       this.goUpStairs();
@@ -101,7 +98,7 @@ class Player extends Subject {
       await this.delay(30);
       this.img = this.imgLeft2;
       this.width = this.img.width/this.img.height*this.height;
-      await this.delay(50);
+      await this.delay(20);
       this.img = this.imgLeft3;
       this.height = defaultHight;
       this.width = this.img.width/this.img.height*this.height;
@@ -113,7 +110,7 @@ class Player extends Subject {
       await this.delay(30);
       this.img = this.imgRight2;
       this.width = this.img.width/this.img.height*this.height;
-      await this.delay(50);
+      await this.delay(20);
       this.img = this.imgRight3;
       this.height = defaultHight;
       this.width = this.img.width/this.img.height*this.height;

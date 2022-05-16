@@ -59,6 +59,7 @@ class PlayScene extends Scene {
 
     this.score.subscribe(this.player);
     this.stairs.subscribe(this.player);
+    this.stairs.subscribe(this.bg);
   }
 
   nextScene() {

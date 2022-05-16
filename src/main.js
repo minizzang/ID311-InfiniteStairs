@@ -1,6 +1,4 @@
 import '../css/style.css';
-// import { sketch } from 'p5js-wrapper';
-// import 'p5/lib/addons/p5.sound';
 import WavPlayer from 'webaudio-wav-stream-player';
 
 import { Background } from './Background.js';
@@ -17,25 +15,15 @@ import { firebaseConfig } from '../firebaseConfig';
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-
 let bg, player, stairs, scene, font, bgm, gameOverSound, goUpAnimation;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
 function preload() {
-  // bgm = new Audio('../public/bgm.mp3');
-  // bgm.loop = true;
-
-  // gameOverSound = new Audio('../public/gameOver.MP3');
-
   bgm = loadSound('../assets/Sounds/bgm.wav');
   bgm.setVolume(0.1);
 
   gameOverSound = loadSound('../assets/Sounds/gameOver.wav');
   gameOverSound.setVolume(0.2);
-
-  // goUpAnimation = loadAnimation('../assets/Images/worker/workerRight1.png', '../assets/Images/worker/workerRight3.png');
-  let spriteSheet = loadSpriteSheet('../assets/Images/worker/workerRight1.png', 50, 100, 3);
-  goUpAnimation = loadAnimation(spriteSheet);
 }
 
 function setup(){
@@ -56,10 +44,10 @@ function draw(){
 
 function initObjects() {
   // init background
-  bg = new Background(400, 300, 1200);
+  bg = new Background(GAME_WIDTH/2, -550, GAME_WIDTH);
   
   // init a player and register callback for game over
-  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100, goUpAnimation);
+  player = new Player(GAME_WIDTH/2, GAME_HEIGHT*0.66, 100);
   player.registerCallback(gameOver);
 
   // init stairs
@@ -73,7 +61,8 @@ async function gameOver() {
   if (scene.getSceneNum() == 2) {
     await delay(1500);    // wait for player falling animation
     scene = scene.nextScene();
-    bgm.pause();
+    scene.setBestScore();
+    bgm.stop();
 
     await delay(200);
     gameOverSound.play();
@@ -112,7 +101,7 @@ async function playGame(sceneNum) {
   } else if (sceneNum == 3) {
     initObjects();
     if (gameOverSound.isPlaying()) {
-      gameOverSound.pause();
+      gameOverSound.stop();
     }
     await delay(200);
     bgm.play();

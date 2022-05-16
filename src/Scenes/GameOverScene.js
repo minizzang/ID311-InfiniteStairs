@@ -13,8 +13,18 @@ class GameOverScene extends Scene {
     this.player = player;
     this.stairs = stairs;
     this.score = score;
+    this.bestScore = 0;
 
     this.btnPlay = new PlayButton (width/2, height*0.9, BTN_SIZE, BTN_SIZE*0.8);
+  }
+
+  setBestScore() {
+    let storedBestScore = localStorage.getItem('bestScore');
+    if (storedBestScore == null || this.score > storedBestScore) {
+      localStorage.setItem('bestScore', this.score);
+      storedBestScore = this.score;
+    }
+    this.bestScore = storedBestScore;
   }
 
   draw() {
@@ -39,7 +49,7 @@ class GameOverScene extends Scene {
     textSize(ATTRIBUTE_SIZE);
     text("BEST SCORE", width/2, height*0.3);
     textSize(TEXT_SIZE_M);
-    text("516", width/2, height*0.4);
+    text(`${this.bestScore}`, width/2, height*0.4);
     textSize(ATTRIBUTE_SIZE);
     text("SCORE", width/2, height*0.5);
     textSize(TEXT_SIZE_L);
