@@ -49,7 +49,7 @@ The goal of this game is **to climb many stairs and score as much as possible.**
 
    - **state machine**
       - For the transition of the scenes, I used state machine. Every scene object has nextScene() function, and switch the scene when this function is called.
-      - ![](assets/Images/description/sceneTransition.jpg)
+      - ![](assets/Images/description/sceneTransition.JPG)
       - Above images describes the state machine and shared objects. Scenes shares 3 objects and they initialized at game start or restart.
 
 Basically I used vite and p5.js. Also, used **[p5.sound library](https://p5js.org/ko/reference/#/libraries/p5.sound)** for sound effects.
