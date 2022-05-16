@@ -9,13 +9,6 @@ import { IntroScene } from './Scenes/IntroScene.js';
 
 import { GAME_WIDTH, GAME_HEIGHT, STEP_NUM } from './Constants.js';
 
-// Import for firebase
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../firebaseConfig';
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
 let bg, player, stairs, scene, font, bgm, gameOverSound;
 
 // SCENE NUM 1: Intro scene, 2: Play scene, 3: GameOver scene
