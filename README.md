@@ -133,6 +133,7 @@ Basically I used vite and p5.js. Also, used **[p5.sound library](https://p5js.or
 
 2. Firebase deploy
    - I tried deploy using firebase, but there was an error on decoding the sound file.
+   - In branch 'firebase-deploy'
 
 ## References
 - [Infinite Stairs-original game](https://play.google.com/store/apps/details?id=com.nflystudio.InfiniteStaircase&hl=ko&gl=US) : All the images I used were taken from this app. (except the background image)
